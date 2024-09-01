@@ -1,14 +1,20 @@
 import { useState } from 'react'
-import {HashRouter as Router, Routes, Route} from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
+import content from '../components/content.json'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import '../App.css'
 
+
 export function Home(){
     const [count, setCount] = useState(0)
+    
 
   return (
     <>
+      <Helmet>
+        <title>{content['siteTitle']}</title>
+      </Helmet>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
