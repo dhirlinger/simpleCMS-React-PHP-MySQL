@@ -7,8 +7,8 @@ import content from './components/content.json'
 import './App.css'
 
 function App() {
-  
-  const [data, setData] = useState(content);
+  //old: graab from json file 
+  /*const [data, setData] = useState(content);*/
 
   return(
     <>
@@ -18,8 +18,8 @@ function App() {
         <Route path={"/"} element={<Home />} />
         <Route path={"/Admin"} 
            element={
-           <Admin setData={setData} 
-           data={data}
+           <Admin //setData={setData} 
+           //data={data}
            />
            } />
       </Routes>
