@@ -1,9 +1,9 @@
-import { useState } from 'react'
+
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import  Admin from './pages/Admin'
-import content from './components/content.json'
+
 import './App.css'
 
 function App() {

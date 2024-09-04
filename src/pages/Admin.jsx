@@ -11,13 +11,14 @@ const Admin = () => {
       const value = event.target.value;
       setInputs(values => ({...values, [name]: value}))
    }
+
    const handleSubmit = (event) => {
       event.preventDefault();
-
-      axios.post('http://localhost:8888/api/header/save', inputs);
-      console.log(inputs);
+      axios.post("http://localhost:8888/api/header/save", inputs).then(function(response) {
+         console.log(response.data);
+      })
+      
    }
-
    return(
       <>
          <Helmet>

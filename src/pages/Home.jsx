@@ -1,13 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import content from '../components/content.json'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import '../App.css'
-
+import axios from 'axios';
 
 export function Home(){
+
+  const [header, setHeader] = useState({});
+  useEffect(() => {
+    getHeaderContent();
+  }, []);
+
+  function getHeaderContent(){
+    axios.get("http://localhost:8888/api/header").then(function(response){
+      console.log(response.data);
+      setHeader(response.data[0]);
+    });
+  }
    
+  
 
   return (
     <>
@@ -22,8 +35,8 @@ export function Home(){
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Title: @doughirlinger.com</h1>
-      <h2>Tagline: </h2>
+      <h1>Title: {header.site_title}</h1>
+      <h2>Tagline: {header.tagline}</h2>
   
       
     </>
