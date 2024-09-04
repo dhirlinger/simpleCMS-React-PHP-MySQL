@@ -1,16 +1,23 @@
 import { Helmet } from "react-helmet-async"
-
-import content from '../components/content.json'
+import { useState } from "react";
+import axios from "axios";
 
 const Admin = () => {
-/*
-   const updateSiteTitle = () => {
-      setData({...data, 
-         "name": "Test Update"
-      });
-      console.log("did call");
+
+   const [inputs, setInputs] = useState({});
+
+   const handleChange = (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      setInputs(values => ({...values, [name]: value}))
    }
-   */
+   const handleSubmit = (event) => {
+      event.preventDefault();
+
+      axios.post('http://localhost:8888/api/header/save', inputs);
+      console.log(inputs);
+   }
+
    return(
       <>
          <Helmet>
@@ -20,7 +27,7 @@ const Admin = () => {
             <h1>Admin Page</h1>
             <hr/ >
             <h2>Header Content</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                <table cellSpacing="8">
                   <tbody>
                      <tr>
@@ -28,7 +35,7 @@ const Admin = () => {
                            <label>Site Title</label>
                         </th>
                         <td>
-                           <input type="text" name="site_title" />
+                           <input type="text" name="site_title" onChange={handleChange} />
                         </td>
                      </tr>
                      <tr>
@@ -36,7 +43,7 @@ const Admin = () => {
                            <label>Tagline</label>
                         </th>
                         <td>
-                           <input type="text" name="tagline" /> 
+                           <input type="text" name="tagline" onChange={handleChange} /> 
                         </td>
                      </tr>
                      <tr>
