@@ -1,32 +1,18 @@
-import { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet-async'
-import content from '../components/content.json'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '/vite.svg'
-import '../App.css'
-import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+import reactLogo from '../assets/react.svg';
+import viteLogo from '/vite.svg';
+import '../App.css';
+import { NavBar } from "../components/NavBar";
 
-export function Home(){
 
-  const [header, setHeader] = useState({});
-  useEffect(() => {
-    getHeaderContent();
-  }, []);
-
-  function getHeaderContent(){
-    axios.get("http://localhost:8888/api/header").then(function(response){
-      console.log(response.data);
-      setHeader(response.data[0]);
-    });
-  }
-   
-  
+export function Home({ header }){
 
   return (
     <>
       <Helmet>
-        <title>{content['siteTitle']}</title>
+        <title>{header.site_title}</title>
       </Helmet>
+      <NavBar />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />

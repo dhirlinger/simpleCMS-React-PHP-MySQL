@@ -1,29 +1,69 @@
-import { Helmet } from "react-helmet-async"
-import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import { NavBar } from '../components/NavBar';
 
-const Admin = () => {
+const Admin = ({ headerData, setHeaderData, headerImage, setHeaderImage, header, getCount, setGetCount }) => {
 
-   const [inputs, setInputs] = useState({});
+   const handleImageChange = (event) => {
+      setHeaderImage(event.target.files[0]);
+   }
 
    const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      setInputs(values => ({...values, [name]: value}))
-   }
 
-   const handleSubmit = (event) => {
-      event.preventDefault();
-      axios.post("http://localhost:8888/api/header/save", inputs).then(function(response) {
-         console.log(response.data);
-      })
+      const {name, value} = event.target;
+      // const name = event.target.name;
+      // const value = event.target.value;   
+      setHeaderData(values => ({...values, [name]: value}));
       
-   }
+   }    
+   
+   const handleSubmit = async (event) => {
+      event.preventDefault();
+      
+      const formData = new FormData();
+      if(image){formData.append('image', headerImage);}
+      
+      if(isEmpty(headerData)){
+         console.log("No form data to post");
+      } else {
+         console.log('else');
+         if(headerData.site_title){formData.append('site_title', headerData.site_title);}
+         if(headerData.tagline){ formData.append('tagline', headerData.tagline);}
+      }
+      
+     
+      
+         try{
+            const response = await axios.post("http://localhost:8888/api/header/save", formData, {
+               headers: {'Content-Type': 'multipart/form-data'
+            } 
+            });
+            console.log('Upload successful:', response.data);
+            setGetCount(getCount + 1);
+         } catch(error){
+            console.error('Upload Error:', error);
+            }
+      
+
+      
+   };
+
+   function isEmpty(obj) {
+      for (const prop in obj) {
+        if (Object.hasOwn(obj, prop)) {
+          return false;
+        }
+      }
+    
+      return true;
+    }
+   
    return(
       <>
          <Helmet>
-            <title>{/*content['siteTitle'] +*/ " Admin"}</title>
+            <title>{header.site_title + " Admin"}</title>
          </Helmet>
+         <NavBar />
          <div>
             <h1>Admin Page</h1>
             <hr/ >
@@ -48,6 +88,12 @@ const Admin = () => {
                         </td>
                      </tr>
                      <tr>
+                        <th>Image</th>
+                        <td>
+                        <input type="file" id="image" name="image" onChange={handleImageChange}/>
+                        </td>
+                     </tr>
+                     <tr>
                         <td colSpan="2" align="right">
                            <button>Update</button>
                         </td>
@@ -56,6 +102,8 @@ const Admin = () => {
                </table>
                
             </form>
+            <p>{header.tagline}</p>
+            <img src={header.image} width={200} />
          </div>
          
 
