@@ -4,8 +4,6 @@ import { NavBar } from '../components/NavBar';
 
 const Admin = ({ headerData, setHeaderData, headerImage, setHeaderImage, header, getCount, setGetCount }) => {
 
-
-
    const handleImageChange = (event) => {
       setHeaderImage(event.target.files[0]);
    }
@@ -103,9 +101,8 @@ const Admin = ({ headerData, setHeaderData, headerImage, setHeaderImage, header,
                </table>
                
             </form>
-            <p>{header.site_title}</p>
             <p>{header.tagline}</p>
-            <img src={header.image_path} width={200} />
+            <img src={header.image} width={200} />
          </div>
          
 
